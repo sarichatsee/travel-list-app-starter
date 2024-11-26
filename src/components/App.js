@@ -10,12 +10,39 @@ function Logo() {
   return <h1>My Travel List</h1>;
 }
 
-function Form() {
+function PackingList({ items }) {
+  return (
+    <div className="list">
+      <ul>
+        {items.map((item) => (
+          <Item packingItem={item} key={item.id} />
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+function Form({ addItem }) {
   const [description, setDescription] = React.useState("");
   const [quantity, setQuantity] = React.useState(1);
 
   function handleSubmit(e) {
     e.preventDefault();
+
+    if (!description) return;
+
+    const newItem = {
+      id: Date.now(),
+      description,
+      quantity,
+      packed: false,
+    }
+
+    addItem(newItem);
+
+    // reset input fields
+    setDescription("");
+    setQuantity(1);
     console.log("Form submitted");
   }
 
@@ -57,19 +84,6 @@ function Item({ packingItem }) {
   );
 }
 
-
-function PackingList() {
-  return (
-    <div className="list">
-      <ul>
-        {initialItems.map((item) => (
-          <Item packingItem={item} />
-        ))}
-      </ul>
-    </div>
-  );
-}
-
 function Stats() {
   return (
     <footer className="stats">
@@ -79,11 +93,17 @@ function Stats() {
 }
 
 function App() {
+  const [items, setItems] = React.useState([]);
+
+  function handleAddItem(item) {
+    setItems((prevItems) => [...prevItems, item]);
+  }
+
   return (
     <div className="app">
       <Logo />
-      <Form />
-      <PackingList />
+      <Form addItem={handleAddItem} />
+      <PackingList items={items} />
       <Stats />
     </div>
   );
