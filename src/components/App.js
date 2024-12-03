@@ -1,44 +1,63 @@
-import React from "react";
-import Form from "./Form";
-import PackingList from "./PackingList";
-import Stats from "./Stats";
-
-function Logo() {
-  return <h1>My Travel List</h1>;
-}
+import React, { useState } from "react";
+import AddMovieForm from "./AddMovieForm";
+import MovieList from "./MovieList";
 
 function App() {
-  const [items, setItems] = React.useState([]);
+  const [movies, setMovies] = useState([]);
+  const [sortOrder, setSortOrder] = useState("asc"); // 'asc' for ascending, 'desc' for descending
 
-  function handleAddItem(item) {
-    setItems((prevItems) => [...prevItems, item]);
-  }
+  const handleAddMovie = (title) => {
+    const newMovie = {
+      id: Date.now(),
+      title,
+      watched: false,
+    };
+    setMovies([...movies, newMovie]);
+  };
 
-  function handleDeleteItem(id) {
-    if (window.confirm("Are you sure you want to delete this item?")) {
-      setItems((prevItems) => prevItems.filter((item) => item.id !== id));
-    }
-  }
-  
-
-  function handleUpdateItem(id) {
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === id ? { ...item, packed: !item.packed } : item
-      )
+  const handleToggleWatched = (id) => {
+    const updatedMovies = movies.map((movie) =>
+      movie.id === id ? { ...movie, watched: !movie.watched } : movie
     );
-  }
+    setMovies(updatedMovies);
+  };
+
+  const handleDeleteMovie = (id) => {
+    const updatedMovies = movies.filter((movie) => movie.id !== id);
+    setMovies(updatedMovies);
+  };
+
+  const handleSortMovies = () => {
+    const sortedMovies = [...movies].sort((a, b) => {
+      if (sortOrder === "asc") {
+        return a.title.localeCompare(b.title); // Ascending order
+      } else {
+        return b.title.localeCompare(a.title); // Descending order
+      }
+    });
+    setMovies(sortedMovies);
+    setSortOrder(sortOrder === "asc" ? "desc" : "asc"); // Toggle sort order
+  };
 
   return (
-    <div className="app">
-      <Logo />
-      <Form addItem={handleAddItem} />
-      <PackingList
-        items={items}
-        onDeleteItem={handleDeleteItem}
-        onUpdateItem={handleUpdateItem}
+    <div>
+      <h1>Favorite Movies</h1>
+      <AddMovieForm onAddMovie={handleAddMovie} />
+      <div>
+        <button onClick={handleSortMovies}>
+          {sortOrder === "asc" ? (
+            <i className="fa-solid fa-arrow-down-z-a"></i>
+          ) : (
+            <i className="fa-solid fa-arrow-up-z-a"></i>
+          )}
+          Sort by Title
+        </button>
+      </div>
+      <MovieList
+        movies={movies}
+        onToggleWatched={handleToggleWatched}
+        onDeleteMovie={handleDeleteMovie}
       />
-      <Stats items={items} />
     </div>
   );
 }
