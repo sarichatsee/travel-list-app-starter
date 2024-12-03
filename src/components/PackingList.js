@@ -1,4 +1,5 @@
 import React from "react";
+import Item from "./Item"; // Import the Item component
 
 function PackingList({ items, onDeleteItem, onUpdateItem }) {
   return (
@@ -14,24 +15,6 @@ function PackingList({ items, onDeleteItem, onUpdateItem }) {
         ))}
       </ul>
     </div>
-  );
-}
-
-function Item({ packingItem, onDeleteItem, onUpdateItem }) {
-  return (
-    <li>
-      <input
-        type="checkbox"
-        checked={packingItem.packed}
-        onChange={() => onUpdateItem(packingItem.id)}
-      />
-      <span
-        style={packingItem.packed ? { textDecoration: "line-through" } : {}}
-      >
-        {packingItem.description} ({packingItem.quantity})
-      </span>
-      <button onClick={() => onDeleteItem(packingItem.id)}>🗑️</button>
-    </li>
   );
 }
 
