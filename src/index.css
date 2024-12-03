@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&family=Pacifico&display=swap");
 
+/* Reset and Base Styles */
 * {
   margin: 0;
   padding: 0;
@@ -18,6 +19,7 @@ body {
   overflow: hidden; /* Prevent scrolling for the body */
 }
 
+/* App Container */
 .app {
   width: 100%;
   height: 100vh;
@@ -27,6 +29,7 @@ body {
   overflow: hidden;
 }
 
+/* Header Styles */
 h1 {
   text-align: center;
   background: linear-gradient(145deg, #ff99cc, #ffccff);
@@ -36,7 +39,7 @@ h1 {
   font-weight: 400;
   color: #ffffff;
   text-shadow: 0px 4px 8px rgba(255, 182, 193, 0.7);
-  letter-spacing: -2px;
+  letter-spacing: 3px;
   padding: 2rem 0;
   border: 4px solid #ffbde3;
   border-radius: 15px;
@@ -44,9 +47,10 @@ h1 {
   box-shadow: 0px 5px 15px rgba(255, 182, 193, 0.5);
 }
 
+/* Form Styles */
 .add-form {
   background: linear-gradient(145deg, #ffccee, #ffe6ff);
-  padding: 3rem 1rem;
+  padding: 2rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -96,6 +100,7 @@ input {
   flex-grow: 1;
 }
 
+/* Sort Button */
 .sort-button {
   background: linear-gradient(145deg, #ffa1c6, #ffb3d9);
   color: white;
@@ -113,6 +118,7 @@ input {
   transform: scale(1.1);
 }
 
+/* List Styles */
 .list {
   background: linear-gradient(145deg, #ffe4f2, #ffebff);
   color: #5a3e2b;
@@ -127,34 +133,8 @@ input {
   width: 90%;
   margin: auto;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Two rows when items overflow */
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjusts to screen size */
   gap: 1.6rem;
-}
-
-..list li input[type="checkbox"] {
-  width: 2.4rem; /* Explicit width */
-  height: 2.4rem; /* Explicit height */
-  background: #fff; /* Background color */
-  border: 2px solid #ffb3d9; /* Border color */
-  border-radius: 0.2rem; /* Slightly rounded corners for a square look */
-  cursor: pointer; /* Pointer on hover */
-  appearance: auto; /* Use browser's default for compatibility */
-  outline: none; /* Removes focus outline */
-}
-
-.list li input[type="checkbox"]:checked {
-  background: #ff69b4; /* Pink background when checked */
-  border-color: #ff69b4; /* Match border color when checked */
-}
-
-.list li input[type="checkbox"]:checked::before {
-  content: ""; /* Remove any additional ticks/icons added before */
-}
-
-.list li span {
-  text-align: left; /* Align text to the left */
-  font-size: 1.8rem;
-  word-wrap: break-word; /* Handles long text wrapping */
 }
 
 .list li {
@@ -169,7 +149,45 @@ input {
   border: 2px solid #ffb3d9;
 }
 
+/* Checkbox Styles */
+.list li input[type="checkbox"] {
+  width: 2.4rem; /* Fixed width */
+  height: 2.4rem; /* Fixed height */
+  background: #fff; /* Background color for unchecked state */
+  border: 2px solid #ffb3d9; /* Border color for unchecked state */
+  border-radius: 0.2rem; /* Slight rounding for square appearance */
+  cursor: pointer;
+  appearance: none; /* Remove default styling */
+  outline: none; /* Remove focus outline */
+  position: relative;
+  display: inline-block;
+  transition: background 0.3s ease, border 0.3s ease;
+}
 
+.list li input[type="checkbox"]:checked {
+  background: #ff69b4; /* Pink background when checked */
+  border-color: #ff69b4; /* Border matches background when checked */
+}
+
+.list li input[type="checkbox"]:checked::after {
+  content: "✔"; /* Tick symbol */
+  color: white;
+  font-size: 1.6rem;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the tick symbol */
+}
+
+/* Text Styling */
+.list li span {
+  text-align: left;
+  font-size: 1.8rem;
+  word-wrap: break-word; /* Handles long text wrapping */
+}
+
+/* Delete Button */
 .list li button {
   cursor: pointer;
   background: none;
@@ -179,7 +197,7 @@ input {
   transform: translateY(2px);
 }
 
-
+/* Stats Footer */
 .stats {
   background: linear-gradient(145deg, #ffa1c6, #ffb3d9);
   color: white;
